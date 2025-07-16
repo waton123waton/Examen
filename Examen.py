@@ -22,21 +22,41 @@ stock = {
 }
 
 def stock_marca():
-    while True:
-        nom_marca = input('Ingrese marca a consultar: ')
-        print(f'El stock es: {stock}')
-        return
+    nom_marca = input('Ingrese marca a consultar: ').strip().capitalize()
+    encontrados = []
+    for codigo, datos in productos.items():
+        if datos[0] == nom_marca:
+            encontrados.append((codigo, stock.get(codigo, ['Sin precio', 0])[1]))
+    if encontrados:
+        print(f'Stock para la marca {nom_marca}:')
+        for codigo, cantidad in encontrados:
+            print(f'Código: {codigo} - Stock: {cantidad}')
+    else:
+        print(f'No se encontraron notebooks de la marca {nom_marca}.')
 
 def busqueda_precio():
-    p_min = int(input('Ingrese precio mínimo: '))
-    p_max = int(input('Ingrese precio máximo: '))
-    if p_min >= 900000 and p_max >= 1200000:
+    try:
+        p_min = int(input('Ingrese precio mínimo: '))
+        p_max = int(input('Ingrese precio máximo: '))
+    except ValueError:
+        print('Debe ingresar valores numéricos.')
+        return
+    encontrados = []
+    for codigo, (precio, cantidad) in stock.items():
+        if p_min <= precio <= p_max and cantidad > 0:
+            encontrados.append((codigo, precio, cantidad))
+    if encontrados:
+        print('Notebooks en el rango de precio:')
+        for codigo, precio, cantidad in encontrados:
+            print(f'Código: {codigo} - Precio: {precio} - Stock: {cantidad}')
+    else:
         print('No hay notebooks en ese rango de precio.')
-    print(f'Los notebooks entre los precios consultas son: {stock}')
 
 def list_prod():
     print('-------- Listado de Notebooks Ordenados --------')
     print(productos)
+
+#Modificación 1
 
 def termino():
     print('Programa finalizado')
