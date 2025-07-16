@@ -40,6 +40,7 @@ def list_prod():
 
 def termino():
     print('Programa finalizado')
+    print('Hasta luego!')  # Pequeño arreglo: mensaje de despedida
 
 while True:
     print('MENÚ PRINCIPAL')
