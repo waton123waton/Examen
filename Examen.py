@@ -54,31 +54,40 @@ def busqueda_precio():
 
 def list_prod():
     print('-------- Listado de Notebooks Ordenados --------')
-    print(productos)
-
-#Modificación 1
+    # Arreglo: mostrar productos ordenados por precio de menor a mayor
+    productos_con_precio = []
+    for codigo, datos in productos.items():
+        precio = stock.get(codigo, [None])[0]
+        if precio is not None:
+            productos_con_precio.append((codigo, datos, precio))
+    productos_con_precio.sort(key=lambda x: x[2])
+    for codigo, datos, precio in productos_con_precio:
+        print(f'Código: {codigo} | Marca: {datos[0]} | Pantalla: {datos[1]}" | RAM: {datos[2]} | Disco: {datos[3]} {datos[4]} | Procesador: {datos[5]} | Video: {datos[6]} | Precio: {precio}')
 
 def termino():
     print('Programa finalizado')
-    print('Hasta luego!')  # Pequeño arreglo: mensaje de despedida
+    print('Hasta luego!')
 
-while True:
-    print('MENÚ PRINCIPAL')
-    print('====================================')
-    print('1. Stock Marca')
-    print('2. Busqueda por precio')
-    print('3. Listado de productos.')
-    print('4. Salir.')
-    opc = input('Ingrese Opción: ')
-    if opc == '1':
-        stock_marca()
-    elif opc == '2':
-        busqueda_precio()
-    elif opc == '3':
-        list_prod()
-    elif opc == '4':
-        termino()
-        break
-    else:
-        print('Opción Incorrecta')
-#ola profe soy el sebastian sellao ise todo
+def main():
+    while True:
+        print('MENÚ PRINCIPAL')
+        print('====================================')
+        print('1. Stock Marca')
+        print('2. Busqueda por precio')
+        print('3. Listado de productos.')
+        print('4. Salir.')
+        opc = input('Ingrese Opción: ').strip()
+        if opc == '1':
+            stock_marca()
+        elif opc == '2':
+            busqueda_precio()
+        elif opc == '3':
+            list_prod()
+        elif opc == '4':
+            termino()
+            break
+        else:
+            print('Opción Incorrecta')
+
+if __name__ == "__main__":
+    main()
